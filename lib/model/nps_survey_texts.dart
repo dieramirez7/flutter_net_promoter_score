@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class NpsSelectScorePageTexts {
   final String surveyQuestionText;
   final String detractorScoreLabelText;
@@ -38,14 +40,7 @@ class NpsFeedbackPageTexts {
         "Let us know how we can make the app better",
     this.editScoreButtonText = "Edit Score",
     this.submitButtonText = "Done",
-  })  : assert(promoterMainLabelText != null),
-        assert(promoterFeedbackTextFieldPlaceholderText != null),
-        assert(passiveMainLabelText != null),
-        assert(passiveFeedbackTextFieldPlaceholderText != null),
-        assert(detractorMainLabelText != null),
-        assert(detractorFeedbackTextFieldPlaceholderText != null),
-        assert(editScoreButtonText != null),
-        assert(submitButtonText != null);
+  });
 }
 
 class NpsThankYouPageTexts {
@@ -53,6 +48,23 @@ class NpsThankYouPageTexts {
 
   const NpsThankYouPageTexts({
     this.thankYouLabelText = "Thanks for your feedback!",
+  });
+}
+
+class NpsThankYouPageButtons {
+
+  final Widget thankYouButtonContent;
+  final Function() thankYouButtonAction;
+  final ButtonStyle? thankYouButtonStyle;
+  final Widget thankYouButtonCancelContent;
+  final ButtonStyle? thankYouButtonCancelStyle;
+
+  const NpsThankYouPageButtons({
+    required this.thankYouButtonContent,
+    required this.thankYouButtonAction,
+    this.thankYouButtonStyle,
+    required this.thankYouButtonCancelContent,
+    this.thankYouButtonCancelStyle,
   });
 }
 
@@ -65,7 +77,5 @@ class NpsSurveyTexts {
     this.selectScorePageTexts = const NpsSelectScorePageTexts(),
     this.feedbackPageTexts = const NpsFeedbackPageTexts(),
     this.thankYouPageTexts = const NpsThankYouPageTexts(),
-  })  : assert(selectScorePageTexts != null),
-        assert(feedbackPageTexts != null),
-        assert(thankYouPageTexts != null);
+  });
 }

@@ -3,13 +3,18 @@ import 'package:flutter_net_promoter_score/model/nps_survey_texts.dart';
 
 class NpsThankYouWidget extends StatefulWidget {
   final NpsThankYouPageTexts texts;
+  final NpsThankYouPageButtons? buttons;
+
   final Widget? thankYouIcon;
+
+  get hasButton => buttons != null;
 
   NpsThankYouWidget({
     Key? key,
     required this.texts,
     this.thankYouIcon,
-  })  : super(key: key);
+    this.buttons,
+  }) : super(key: key);
 
   @override
   NpsThankYouWidgetState createState() => new NpsThankYouWidgetState();
@@ -29,7 +34,6 @@ class NpsThankYouWidgetState extends State<NpsThankYouWidget> {
               ),
             ],
           ),
-          // Icon(Icon.asset("name")),
           Container(
             child: FittedBox(
               child: this.widget.thankYouIcon == null
@@ -40,16 +44,32 @@ class NpsThankYouWidgetState extends State<NpsThankYouWidget> {
             width: 80,
             height: 80,
           ),
-          SizedBox(
-            height: 5,
-          ),
+          SizedBox(height: 5),
+
           Text(
             this.widget.texts.thankYouLabelText,
-            style: Theme.of(context).textTheme.subtitle2,
+            style: Theme.of(context).textTheme.titleSmall,
           ),
-          SizedBox(
-            height: 10,
-          ),
+          if (this.widget.hasButton)
+            Row(
+              children: [
+                OutlinedButton(
+                  onPressed: () => Navigator.pop(context),
+                  style: this.widget.buttons!.thankYouButtonCancelStyle,
+                  child: this.widget.buttons!.thankYouButtonCancelContent,
+                ),
+                OutlinedButton(
+                  onPressed: () => {
+                    this.widget.buttons!.thankYouButtonAction,
+                    Navigator.pop(context)
+                  },
+                  style: this.widget.buttons!.thankYouButtonStyle,
+                  child: this.widget.buttons!.thankYouButtonContent,
+                ),
+              ],
+            ),
+
+          SizedBox(height: 10),
         ],
       ),
       padding: const EdgeInsets.symmetric(

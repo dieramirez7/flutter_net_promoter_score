@@ -10,25 +10,27 @@ import 'model/net_promoter_score_result.dart';
 import 'model/nps_survey_page.dart';
 
 /// Show a modal Net Promoter Score as a material design bottom sheet.
-/// 
+///
 /// The `context` argument is used to look up the [Navigator] and [Theme] for
 /// the bottom sheet. It is only used when the method is called. Its
 /// corresponding widget can be safely removed from the tree before the bottom
 /// sheet is closed.
-/// 
+///
 /// Use `onClosePressed` parameter to get callback when the user close the survery using the close button
-/// 
+///
 /// Use `onScoreChanged` parameter to get callback when the user change the score
-/// 
+///
 /// Use `onFeedbackChanged` parameter to get callback when the user change the feedback text field
-/// 
+///
 /// Use `onSurveyCompleted` parameter to get callback when the survery is campleted. This callback will provide [NetPromoterScoreResult] object with the final survery results.
-/// 
+///
 /// Use `texts` parameter to customize the text in the survery using your own texts.
-/// 
+///
 /// Use `theme` parameter to customize the look and feel of the survey. change font and colors using [ThemeData] object
-/// 
+///
 /// Use `thankYouIcon` parameter to provide a your own [Widget] for the Thank You view image
+///
+/// Use `thankYouButtons` parameter to provide a buttons at the very end.
 /// ```dart
 /// showNetPromoterScore(
 ///   context: context,
@@ -59,7 +61,7 @@ import 'model/nps_survey_page.dart';
 ///   theme: ThemeData.dark()
 /// );
 /// ```
-/// 
+///
 Future<T?> showNetPromoterScore<T>({
   required BuildContext context,
   ThemeData? theme,
@@ -69,6 +71,7 @@ Future<T?> showNetPromoterScore<T>({
   Function(NetPromoterScoreResult result)? onSurveyCompleted,
   NpsSurveyTexts texts = const NpsSurveyTexts(),
   Widget? thankYouIcon,
+  NpsThankYouPageButtons? thankYouButtons,
 }) {
 
   bool currentlyShowingSurvey = true;
@@ -92,22 +95,25 @@ Future<T?> showNetPromoterScore<T>({
             onSurveyCompleted(result);
           }
 
-          // Dismiss after delay
-          Future.delayed(
-            const Duration(milliseconds: 2000),
-            () {
-              // Check if the user didn't dismiss the modal view manually by him self
-              if (currentlyShowingSurvey) {
-                Navigator.pop(context);
-              }
-            },
-          );
+          // Dismiss after delay, if no buttons.
+          if (thankYouButtons == null) {
+            Future.delayed(
+              const Duration(milliseconds: 2000),
+                  () {
+                // Check if the user didn't dismiss the modal view manually by him self
+                if (currentlyShowingSurvey) {
+                  Navigator.pop(context);
+                }
+              },
+            );
+          }
         },
         onScoreChanged: onScoreChanged,
         onFeedbackChanged: onFeedbackChanged,
         texts: texts,
         theme: theme == null ? Theme.of(context) : theme,
         thankYouIcon: thankYouIcon,
+        thankYouButtons: thankYouButtons,
       );
     },
   );
@@ -127,6 +133,7 @@ class FlutterNetPromoterScore extends StatefulWidget {
   final Function(String newFeedback)? onFeedbackChanged;
   final ThemeData? theme;
   final Widget? thankYouIcon;
+  final NpsThankYouPageButtons? thankYouButtons;
 
   FlutterNetPromoterScore({
     this.onSurveyCompleted,
@@ -136,6 +143,7 @@ class FlutterNetPromoterScore extends StatefulWidget {
     this.theme,
     this.texts = const NpsSurveyTexts(),
     this.thankYouIcon,
+    this.thankYouButtons,
   });
 
   @override
@@ -166,6 +174,7 @@ class FlutterNetPromoterScoreState extends State<FlutterNetPromoterScore> {
     return NpsThankYouWidget(
       texts: this.widget.texts.thankYouPageTexts,
       thankYouIcon: this.widget.thankYouIcon,
+      buttons: this.widget.thankYouButtons,
     );
   }
 
