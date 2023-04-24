@@ -53,22 +53,26 @@ class NpsThankYouWidgetState extends State<NpsThankYouWidget> {
             style: Theme.of(context).textTheme.titleSmall,
           ),
           if (this.widget.showButtons)
-            Row(
-              children: [
-                OutlinedButton(
-                  onPressed: () => Navigator.pop(context),
-                  style: this.widget.buttons!.thankYouButtonCancelStyle,
-                  child: this.widget.buttons!.thankYouButtonCancelContent,
-                ),
-                TextButton(
-                  onPressed: () => {
-                    this.widget.buttons!.thankYouButtonAction,
-                    Navigator.pop(context)
-                  },
-                  style: this.widget.buttons!.thankYouButtonStyle,
-                  child: this.widget.buttons!.thankYouButtonContent,
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  OutlinedButton(
+                    onPressed: () => Navigator.pop(context),
+                    style: this.widget.buttons!.thankYouButtonCancelStyle,
+                    child: this.widget.buttons!.thankYouButtonCancelContent,
+                  ),
+                  TextButton(
+                    onPressed: () => {
+                      this.widget.buttons!.thankYouButtonAction,
+                      Navigator.pop(context)
+                    },
+                    style: this.widget.buttons!.thankYouButtonStyle,
+                    child: this.widget.buttons!.thankYouButtonContent,
+                  ),
+                ],
+              ),
             ),
 
           SizedBox(height: 10),
