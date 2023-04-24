@@ -4,14 +4,16 @@ import 'package:flutter_net_promoter_score/model/nps_survey_texts.dart';
 class NpsThankYouWidget extends StatefulWidget {
   final NpsThankYouPageTexts texts;
   final NpsThankYouPageButtons? buttons;
+  final int? score;
 
   final Widget? thankYouIcon;
 
-  get hasButton => buttons != null;
+  get showButtons => buttons != null && score != null && score! > buttons!.showButtonsWhenRatingAtLeast;
 
   NpsThankYouWidget({
     Key? key,
     required this.texts,
+    required this.score,
     this.thankYouIcon,
     this.buttons,
   }) : super(key: key);
@@ -47,10 +49,10 @@ class NpsThankYouWidgetState extends State<NpsThankYouWidget> {
           SizedBox(height: 5),
 
           Text(
-            this.widget.texts.thankYouLabelText,
+            this.widget.showButtons ? this.widget.texts.thankYouButtonsLabelText : this.widget.texts.thankYouLabelText,
             style: Theme.of(context).textTheme.titleSmall,
           ),
-          if (this.widget.hasButton)
+          if (this.widget.showButtons)
             Row(
               children: [
                 OutlinedButton(
@@ -58,7 +60,7 @@ class NpsThankYouWidgetState extends State<NpsThankYouWidget> {
                   style: this.widget.buttons!.thankYouButtonCancelStyle,
                   child: this.widget.buttons!.thankYouButtonCancelContent,
                 ),
-                OutlinedButton(
+                TextButton(
                   onPressed: () => {
                     this.widget.buttons!.thankYouButtonAction,
                     Navigator.pop(context)

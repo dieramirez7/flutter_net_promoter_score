@@ -96,7 +96,7 @@ Future<T?> showNetPromoterScore<T>({
           }
 
           // Dismiss after delay, if no buttons.
-          if (thankYouButtons == null) {
+          if (!result.buttonsShown) {
             Future.delayed(
               const Duration(milliseconds: 2000),
                   () {
@@ -172,6 +172,7 @@ class FlutterNetPromoterScoreState extends State<FlutterNetPromoterScore> {
 
   Widget _npsThankYouWidgetBuilder() {
     return NpsThankYouWidget(
+      score: _currentScore,
       texts: this.widget.texts.thankYouPageTexts,
       thankYouIcon: this.widget.thankYouIcon,
       buttons: this.widget.thankYouButtons,
@@ -232,6 +233,7 @@ class FlutterNetPromoterScoreState extends State<FlutterNetPromoterScore> {
       finalResult.score = _currentScore;
       finalResult.feedback = _currentFeedbackText;
       finalResult.promoterType = _currentScore.toPromoterType();
+      finalResult.buttonsShown = (_npsThankYouWidgetBuilder() as NpsThankYouWidget).showButtons;
 
       this.widget.onSurveyCompleted!(finalResult);
     }
