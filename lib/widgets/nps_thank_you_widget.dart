@@ -65,7 +65,7 @@ class NpsThankYouWidgetState extends State<NpsThankYouWidget> {
                   ),
                   TextButton(
                     onPressed: () => {
-                      this.widget.buttons!.thankYouButtonAction,
+                      this.widget.buttons!.thankYouButtonAction(),
                       Navigator.pop(context)
                     },
                     style: this.widget.buttons!.thankYouButtonStyle,
