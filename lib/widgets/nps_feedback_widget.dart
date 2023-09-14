@@ -181,10 +181,8 @@ class NpsFeedbackWidgetState extends State<NpsFeedbackWidget> {
                     this.widget.texts.submitButtonText,
                     style: Theme.of(context).textTheme.button,
                   ),
-                  color: Theme.of(context).buttonColor,
                   minWidth: 150,
                   height: 45,
-                  splashColor: Colors.transparent,
                 ),
               ],
             )
